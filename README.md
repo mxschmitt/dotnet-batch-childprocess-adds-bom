@@ -71,3 +71,7 @@ Exiting</StdOut>
 
 Expected: No BOM
 Actual: BOM (there are bytes before the 'hello' string)
+
+## Summary
+
+Related to [this](https://stackoverflow.com/questions/2855675/encoding-problem-of-process-standardinput-or-application-executed-from-c-sharp-c) StackOverflow post, so it can be solved by using `chcp` or by setting `Console.InputEncoding = new UTF8Encoding(false);` before the process gets started.

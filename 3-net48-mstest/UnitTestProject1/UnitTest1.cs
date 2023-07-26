@@ -13,6 +13,8 @@ namespace UnitTestProject1
         [TestMethod]
         public async Task TestMethod1()
         {
+            // Solution:
+            // Console.InputEncoding = new UTF8Encoding(false);
             var process = new Process
             {
                 StartInfo = new ProcessStartInfo(@"C:\Program Files\nodejs\node.exe")
@@ -31,7 +33,11 @@ namespace UnitTestProject1
             process.BeginOutputReadLine();
 
             StreamWriter writer = new StreamWriter(process.StandardInput.BaseStream, new UTF8Encoding(false));
-            writer.Write("hello q");
+            writer.Write("hello max");
+            writer.Write("hello max\n");
+            writer.Write("hello max\n");
+            writer.Write("hello max\n");
+            writer.Write("hello max q");
             writer.Flush();
 
             process.WaitForExit();
