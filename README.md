@@ -45,9 +45,9 @@ Open a `Developer Command Prompt for VS 2022`:
 
 ```bash
 chcp 65001
-cd 3-net48-mstest\UnitTestProject1\UnitTestProject1
+cd 3-net48-mstest
 dotnet build
-xunit.console bin\Debug\UnitTestProject1.dll /Logger:trx
+vstest.console UnitTestProject1\bin\Debug\UnitTestProject1.dll /Logger:trx
 ```
 
 Open the `trx` file and observe, that there is a BOM:

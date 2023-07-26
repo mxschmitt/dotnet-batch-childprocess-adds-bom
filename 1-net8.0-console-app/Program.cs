@@ -3,12 +3,12 @@ using System.Text;
 
 var process = new Process
 {
-    StartInfo = new ProcessStartInfo(@"C:\Users\maxschmitt\development\tmp\xunitconsole-workspace\assets\entrypoint.bat")
-    {
+    StartInfo = new ProcessStartInfo(@"C:\Program Files\nodejs\node.exe")
+{
+        Arguments = @"C:\Users\maxschmitt\development\tmp\xunitconsole-workspace\assets\index.js",
         RedirectStandardInput = true,
         RedirectStandardOutput = false,
         RedirectStandardError = false,
-        WorkingDirectory = @"C:\Users\maxschmitt\development\tmp\xunitconsole-workspace\assets",
     },
 };
 

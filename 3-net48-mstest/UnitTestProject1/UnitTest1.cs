@@ -3,6 +3,7 @@ using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace UnitTestProject1
 {
@@ -14,13 +15,13 @@ namespace UnitTestProject1
         {
             var process = new Process
             {
-                StartInfo = new ProcessStartInfo(@"C:\Users\maxschmitt\development\tmp\xunitconsole-workspace\assets\entrypoint.bat")
+                StartInfo = new ProcessStartInfo(@"C:\Program Files\nodejs\node.exe")
                 {
+                    Arguments = @"C:\Users\maxschmitt\development\tmp\xunitconsole-workspace\assets\index.js",
                     RedirectStandardInput = true,
                     RedirectStandardOutput = true,
                     RedirectStandardError = false,
                     UseShellExecute = false,
-                    WorkingDirectory = @"C:\Users\maxschmitt\development\tmp\xunitconsole-workspace\assets",
                 },
             };
 
@@ -29,9 +30,10 @@ namespace UnitTestProject1
 
             process.BeginOutputReadLine();
 
-            var bytes = Encoding.UTF8.GetBytes("hello q");
-            await process.StandardInput.BaseStream.WriteAsync(bytes, 0, bytes.Length);
-            await process.StandardInput.BaseStream.FlushAsync();
+            StreamWriter writer = new StreamWriter(process.StandardInput.BaseStream, new UTF8Encoding(false));
+            writer.Write("hello q");
+            writer.Flush();
+
             process.WaitForExit();
         }
     }
