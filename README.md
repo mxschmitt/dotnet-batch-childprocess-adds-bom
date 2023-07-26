@@ -37,7 +37,7 @@ Actual: No BOM (as expected, a BOM is if there are bytes before the 'hello' stri
 
 ## net48 xunit tests
 
-Issue does not reproduce there
+Issue does reproduce there
 
 Repro steps:
 
