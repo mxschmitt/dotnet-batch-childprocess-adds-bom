@@ -13,8 +13,6 @@ namespace UnitTestProject1
         [TestMethod]
         public async Task TestMethod1()
         {
-            // Solution:
-            // Console.InputEncoding = new UTF8Encoding(false);
             var process = new Process
             {
                 StartInfo = new ProcessStartInfo(@"C:\Program Files\nodejs\node.exe")
@@ -28,7 +26,10 @@ namespace UnitTestProject1
             };
 
             process.OutputDataReceived += (sender, args) => Console.WriteLine(args.Data);
+          
             process.Start();
+            // Fix:
+            // StartProcessWithIOEncoding(process, new UTF8Encoding(false));
 
             process.BeginOutputReadLine();
 
@@ -41,6 +42,26 @@ namespace UnitTestProject1
             writer.Flush();
 
             process.WaitForExit();
+        }
+
+        private static void StartProcessWithIOEncoding(Process process, Encoding encoding)
+        {
+            var originalInputEncoding = Console.InputEncoding;
+            var originalOutputEncoding = Console.OutputEncoding;
+
+            Console.InputEncoding = encoding;
+            Console.OutputEncoding = encoding;
+
+            try
+            {
+                process.Start();
+            }
+            finally
+            {
+                // Restore the original encodings
+                Console.InputEncoding = originalInputEncoding;
+                Console.OutputEncoding = originalOutputEncoding;
+            }
         }
     }
 }

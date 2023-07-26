@@ -75,3 +75,28 @@ Actual: BOM (there are bytes before the 'hello' string)
 ## Summary
 
 Related to [this](https://stackoverflow.com/questions/2855675/encoding-problem-of-process-standardinput-or-application-executed-from-c-sharp-c) StackOverflow post, so it can be solved by using `chcp` or by setting `Console.InputEncoding = new UTF8Encoding(false);` before the process gets started.
+
+Also you can do this instead, since https://github.com/dotnet/runtime/issues/22051 is not backported to .NET framework:
+
+```csharp
+private static void StartProcessWithIOEncoding(Process process)
+{
+    var encoding = new UTF8Encoding(false);
+    var originalInputEncoding = Console.InputEncoding;
+    var originalOutputEncoding = Console.OutputEncoding;
+
+    Console.InputEncoding = encoding;
+    Console.OutputEncoding = encoding;
+
+    try
+    {
+        process.Start();
+    }
+    finally
+    {
+        // Restore the original encodings
+        Console.InputEncoding = originalInputEncoding;
+        Console.OutputEncoding = originalOutputEncoding;
+    }
+}
+```
